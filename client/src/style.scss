@@ -1,0 +1,377 @@
+$background: #9af5f5;
+
+.app {
+  display: flex;
+  justify-content: center;
+  .container {
+    width: 1024px;
+    .link {
+      text-decoration: none;
+      color: inherit;
+    }
+    // LOGIN e REGISTER
+    .auth {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: url("img/banner.jpg") no-repeat center center/cover;
+      height: 100vh;
+      padding: 20px;
+
+      h1 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 20px;
+
+        background-color: rgb(255, 255, 255);
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 280px;
+        gap: 20px;
+
+        input {
+          padding: 12px;
+          border: none;
+          border-bottom: 2px solid gray;
+          font-size: 14px;
+          transition: border-color 0.2s;
+
+          &:focus {
+            border-bottom: 2px solid teal;
+            outline: none;
+          }
+        }
+
+        button {
+          padding: 12px;
+          border: none;
+          background-color: teal;
+          cursor: pointer;
+          color: white;
+          font-size: 14px;
+          font-weight: 600;
+          border-radius: 5px;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: darkcyan;
+          }
+
+          &:active {
+            transform: scale(0.98);
+          }
+        }
+
+        p {
+          font-size: 12px;
+          color: red;
+          text-align: center;
+        }
+
+        span {
+          font-size: 12px;
+          text-align: center;
+          color: #666;
+
+          a {
+            color: teal;
+            text-decoration: none;
+            font-weight: 500;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    // NAVBAR
+
+    .navbar {
+      .container {
+        padding: 10px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .links {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        h6 {
+          font-size: 20px;
+          font-weight: 300;
+        }
+        span {
+          cursor: pointer;
+        }
+      }
+      .logo {
+        img {
+          width: 100px;
+        }
+      }
+    }
+
+    // FOOTER
+    footer {
+      margin-top: 100px;
+      padding: 20px;
+      background-color: $background;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      img {
+        height: 50px;
+      }
+    }
+
+    // TAREFAS
+
+    .tarefas {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+
+      .tarefa {
+        background-color: #e0f7fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: transform 0.2s, box-shadow 0.2s;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .content {
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+
+          h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #00796b;
+            margin-bottom: 15px;
+          }
+
+          p {
+            font-size: 16px;
+            font-weight: 400;
+            color: #004d40;
+            margin-bottom: 10px;
+          }
+        }
+
+        .tempo {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 10px;
+
+          p {
+            font-size: 14px;
+            font-weight: 300;
+            color: #004d40;
+          }
+
+          time {
+            color: #00796b;
+            font-weight: 500;
+          }
+        }
+
+        .gerenciamento {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 15px;
+
+          button {
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+
+            &:hover {
+              background-color: #004d40;
+            }
+
+            &:active {
+              transform: scale(0.95);
+            }
+          }
+        }
+      }
+    }
+
+    //HOME
+    .home {
+      height: 100vh;
+      background: url("img/bannerf.avif") no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+
+      .overlay {
+        background-color: rgba(15, 14, 14, 0.938);
+        padding: 40px;
+        border-radius: 10px;
+        text-align: center;
+        color: white;
+        max-width: 600px;
+        margin: 0 20px;
+
+        h1 {
+          font-size: 36px;
+          font-weight: 700;
+          margin-bottom: 20px;
+        }
+
+        p {
+          font-size: 18px;
+          font-weight: 300;
+          margin-bottom: 30px;
+        }
+
+        .cta-button {
+          background-color: teal;
+          color: white;
+          padding: 15px 30px;
+          border-radius: 5px;
+          text-decoration: none;
+          font-size: 16px;
+          font-weight: 600;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: darkcyan;
+          }
+        }
+      }
+    }
+
+    // NOVATAREFA
+
+    .novatarefa {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #f5f5f5;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+
+      h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+        gap: 20px;
+
+        input[type="text"] {
+          padding: 12px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          font-size: 16px;
+          color: #333;
+          transition: border-color 0.3s;
+
+          &::placeholder {
+            color: #888;
+          }
+
+          &:focus {
+            border-color: teal;
+            outline: none;
+          }
+        }
+
+        textarea {
+          padding: 12px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          font-size: 16px;
+          color: #333;
+          min-height: 80px;
+          height: 100px;
+          max-height: 200px;
+          resize: vertical;
+          transition: border-color 0.3s;
+
+          &::placeholder {
+            color: #888;
+          }
+
+          &:focus {
+            border-color: teal;
+            outline: none;
+          }
+        }
+
+        button {
+          padding: 12px;
+          border: none;
+          background-color: teal;
+          color: white;
+          font-size: 16px;
+          font-weight: 600;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: darkcyan;
+          }
+
+          &:active {
+            transform: scale(0.98);
+          }
+        }
+
+        p {
+          font-size: 14px;
+          color: red;
+          text-align: center;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
