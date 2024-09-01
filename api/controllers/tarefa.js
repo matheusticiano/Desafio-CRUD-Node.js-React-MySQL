@@ -94,7 +94,7 @@ export const adicionarTarefa = (req, res) => {
     }
 
     const userId = payload.id;
-    const { title, desc } = req.body;
+    const { title, desc,} = req.body;
 
     console.log("Dados recebidos:", { title, desc });
 
@@ -111,8 +111,8 @@ export const adicionarTarefa = (req, res) => {
         console.log("Erro ao inserir tarefa:", err);
         return res.json(err);
       }
-      console.log("Tarefa inserida com sucesso");
-      return res.status(201).json({ message: "Tarefa criada com sucesso!" });
+      const tarefaId = result.insertId;
+      res.status(201).json({ id: tarefaId, message: "Tarefa criada com sucesso!" });
     });
   });
 };

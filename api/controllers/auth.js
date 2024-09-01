@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const register = (req, res) => {
-  // CONFERIR USUARIO EXISTENTE
   const q = "SELECT * FROM users WHERE email = ? OR name = ?";
 
   db.query(q, [req.body.email, req.body.name], (err, data) => {
@@ -24,15 +23,12 @@ export const register = (req, res) => {
 };
 
 export const login = (req, res) => {
-  // CONFERINDO USUARIO
-
   const q = "SELECT * FROM users WHERE name = ?";
 
   db.query(q, [req.body.name], (err, data) => {
     if (err) return res.json(err);
     if (data.length === 0) return res.status(404).json("Usuario nao encontrado!!");
 
-    // CONFERINDO SENHA
     const isPasswordCorrect = bcrypt.compareSync(req.body.password, data[0].password);
 
     if (!isPasswordCorrect) return res.status(400).json("Usuario ou senha incorretos");
@@ -50,11 +46,11 @@ export const login = (req, res) => {
 };
 
 export const logout = (req, res) => {
-
-  res.clearCookie("access_token",{
-    samesite:"none",
-    secure:true
-  }).status(200).json("Usuario Desconectado")
+  res
+    .clearCookie("access_token", {
+      samesite: "none",
+      secure: true,
+    })
+    .status(200)
+    .json("Usuario Desconectado");
 };
-
-

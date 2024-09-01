@@ -19,6 +19,10 @@ app.use(express.json());
 app.use("/api/tarefas", tarefasRoutes);
 app.use("/api/auth", authRoutes);
 
-app.listen(8800, () => {
-  console.log("Conectado");
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(8800, () => {
+    console.log("Conectado");
+  });
+}
+
+export default app;
