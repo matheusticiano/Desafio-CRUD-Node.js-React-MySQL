@@ -1,7 +1,7 @@
 import mysql from "mysql2";
 
 const config = {
-  host: "localhost",
+  host: process.env.DB_URL ? process.env.DB_URL : "localhost",
   user: "root",
   password: "desafio123",
   database: process.env.NODE_ENV === "test" ? "desafio_test" : "desafio",

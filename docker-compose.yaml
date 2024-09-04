@@ -1,0 +1,54 @@
+services:
+  nginx:
+    build: 
+      context: .
+    ports:
+      - 80:80     
+    container_name: nginx
+    entrypoint: >
+      sh -c "
+      wait-for api:8800 --timeout=60 && wait-for client:3000 --timeout=60 && nginx -g 'daemon off;'"
+    tty: true
+    depends_on:
+      - db
+      - client
+      - api
+
+  api:
+    build: 
+      context: ./api
+    volumes:
+     - ./api:/usr/src/app
+    container_name: api
+    entrypoint: >
+      sh -c "
+       wait-port db:3306 && npm i && node index.js"
+    tty: true
+    environment:
+     DB_URL: db
+     CLIENT_URL: "http://localhost/"
+
+  db:
+    image: mysql:5.7
+    expose:
+    - 3306
+    container_name: db
+    environment: 
+     - MYSQL_ROOT_PASSWORD=desafio123
+    command: --init-file /data/application/init.sql
+    volumes: 
+    - ./init.sql:/data/application/init.sql
+    tty: true
+
+  client:
+    build:
+      context: ./client
+    volumes:
+      - ./client:/usr/src/app
+    container_name: client
+    entrypoint: >
+      sh -c "
+       wait-port api:8800 && npm i && npm start"
+    tty: true
+    environment:
+      REACT_APP_API_URL: "http://localhost/api/"
