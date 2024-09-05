@@ -30,7 +30,9 @@ const TarefasConcluidas = () => {
 
   return (
     <div className="tarefas">
-      {tarefas.map((tarefa) => (
+      {tarefas.length === 0 ? (
+        <h1>Não há tarefas concluidas.</h1>
+      ) : (tarefas.map((tarefa) => (
         <div className="tarefa" key={tarefa.id}>
           <div className="content">
             <h1>{tarefa.title}</h1>
@@ -49,7 +51,8 @@ const TarefasConcluidas = () => {
             <button onClick={() => handleExcluir(tarefa.id)}>Excluir</button>
           </div>
         </div>
-      ))}
+      ))
+    )}
     </div>
   );
 };

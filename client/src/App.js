@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import TarefasConcluidas from "./pages/TarefasConcluidas";
 import NovaTarefa from "./pages/NovaTarefa";
 
+// Layout padrão com Navbar e Footer
 const Layout = () => {
   return (
     <>
@@ -19,15 +20,26 @@ const Layout = () => {
   );
 };
 
+// Layout específico para a Home sem Navbar e Footer
+const HomeLayout = () => {
+  return <Outlet />;
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <HomeLayout />,
     children: [
       {
         path: "/",
         element: <Home />,
       },
+    ],
+  },
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
       {
         path: "/tarefas",
         element: <Tarefas />,

@@ -30,7 +30,7 @@ const Tarefas = () => {
   const handleConcluir = async (id) => {
     try {
       await axios.put(`/tarefas/concluir/${id}`, {}, { withCredentials: true });
-      setTarefas(tarefas.map((tarefa) => (tarefa.id === id ? { ...tarefa, status: 1 } : tarefa)));
+      setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
     } catch (err) {
       console.error("Erro ao concluir tarefa: ", err);
     }
@@ -48,14 +48,14 @@ const Tarefas = () => {
       setTarefas(tarefas.map((tarefa) =>
         tarefa.id === editId ? { ...tarefa, title: editTitle, desc: editDesc } : tarefa
       ));
-      setEditId(null); // Exit edit mode
+      setEditId(null);
     } catch (err) {
       console.error("Erro ao salvar tarefa: ", err);
     }
   };
 
   const handleCancel = () => {
-    setEditId(null); // Exit edit mode
+    setEditId(null);
   };
 
   useEffect(() => {
@@ -64,46 +64,50 @@ const Tarefas = () => {
 
   return (
     <div className="tarefas">
-      {tarefas.map((tarefa) => (
-        <div className="tarefa" key={tarefa.id}>
-          <div className="content">
-            {editId === tarefa.id ? (
-              <>
-                <input
-                  type="text"
-                  value={editTitle}
-                  onChange={(e) => setEditTitle(e.target.value)}
-                />
-                <textarea
-                  value={editDesc}
-                  onChange={(e) => setEditDesc(e.target.value)}
-                />
-                <button onClick={handleSave}>Salvar</button>
-                <button onClick={handleCancel}>Cancelar</button>
-              </>
-            ) : (
-              <>
-                <h1>{tarefa.title}</h1>
-                <p>{tarefa.desc}</p>
-              </>
-            )}
+      {tarefas.length === 0 ? (
+        <h1>Não há tarefas pendentes.</h1>
+      ) : (
+        tarefas.map((tarefa) => (
+          <div className="tarefa" key={tarefa.id}>
+            <div className="content">
+              {editId === tarefa.id ? (
+                <>
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                  />
+                  <textarea
+                    value={editDesc}
+                    onChange={(e) => setEditDesc(e.target.value)}
+                  />
+                  <button onClick={handleSave}>Salvar</button>
+                  <button onClick={handleCancel}>Cancelar</button>
+                </>
+              ) : (
+                <>
+                  <h1>{tarefa.title}</h1>
+                  <p>{tarefa.desc}</p>
+                </>
+              )}
+            </div>
+            <div className="tempo">
+              <p>
+                Data de criação: <time dateTime={tarefa.date}>{new Date(tarefa.date).toLocaleDateString("pt-BR")}</time>
+              </p>
+            </div>
+            <div className="gerenciamento">
+              <button onClick={() => handleConcluir(tarefa.id)} disabled={tarefa.status === 1}>
+                Concluir
+              </button>
+              <button onClick={() => handleEdit(tarefa)}>
+                Editar
+              </button>
+              <button onClick={() => handleExcluir(tarefa.id)}>Excluir</button>
+            </div>
           </div>
-          <div className="tempo">
-            <p>
-              Data de criação: <time dateTime={tarefa.date}>{new Date(tarefa.date).toLocaleDateString("pt-BR")}</time>
-            </p>
-          </div>
-          <div className="gerenciamento">
-            <button onClick={() => handleConcluir(tarefa.id)} disabled={tarefa.status === 1}>
-              Concluir
-            </button>
-            <button onClick={() => handleEdit(tarefa)}>
-              Editar
-            </button>
-            <button onClick={() => handleExcluir(tarefa.id)}>Excluir</button>
-          </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };

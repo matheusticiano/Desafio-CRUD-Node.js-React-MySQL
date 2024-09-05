@@ -4,7 +4,7 @@ $background: #9af5f5;
   display: flex;
   justify-content: center;
   .container {
-    width: 1024px;
+    width: 100%;
     .link {
       text-decoration: none;
       color: inherit;
@@ -97,47 +97,173 @@ $background: #9af5f5;
       }
     }
 
-    // NAVBAR
+// NAVBAR
 
-    .navbar {
-      .container {
-        padding: 10px 0px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .links {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+.navbar {
+  .container {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-        h6 {
-          font-size: 20px;
-          font-weight: 300;
-        }
-        span {
-          cursor: pointer;
-        }
-      }
-      .logo {
-        img {
-          width: 100px;
-        }
+  .links-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-right: 40px;
+  }
+
+  .links_user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+  }
+
+  .links span {
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .links_user span {
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .links span:hover,
+  .links_user span:hover {
+    border-color: teal;
+    color: teal; /* Altere para a cor desejada */
+  }
+
+  .links span:active,
+  .links_user span:active {
+    color: darkcyan; /* Altere para a cor desejada */
+  }
+
+  .logo {
+    width: 100px;
+  }
+
+  .logo img {
+    width: 100px;
+  }
+
+  .menu-icon {
+    display: none;
+  }
+
+  @media (max-width: 500px) {
+    .container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .logo {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .menu-icon {
+      flex: 1;
+      display: flex;
+      justify-content: start;
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    .links-container {
+      position: absolute;
+      top: 120px;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: $background;
+      padding: 10px 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      margin-right: 0; 
+      opacity: 0;
+      max-height: 0px;
+      overflow: hidden; 
+      transition: max-height 0.7s ease-in, opacity 0.7s ease-in;
+
+      &.active {
+        opacity: 1;
+        max-height: 500px;
       }
     }
 
-    // FOOTER
-    footer {
-      margin-top: 100px;
-      padding: 20px;
-      background-color: $background;
+    .links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      width: 100%;
+    }
+
+    .links span {
+      border-bottom: 2px solid transparent;
+      width: 100%;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .links_user span {
+      font-size: 16px;
+      text-align: center;
+      width: 100%;
+      border-bottom: 2px solid transparent;
+      margin: 10px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .links span:hover,
+    .links_user span:hover {
+      border-color: teal;
+      color: teal;
+    }
+
+    .links span:active,
+    .links_user span:active {
+      color: darkcyan;
+    }
+
+    .links_user {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-size: 12px;
-      img {
-        height: 50px;
-      }
+      justify-content: center;
+      gap: 30px;
+      width: 100%;
+    }
+  }
+}
+
+
+
+
+    // FOOTER
+    footer {
+      padding: 20px 0px;
+      background-color: $background;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      justify-content: center;
     }
 
     // TAREFAS
@@ -301,7 +427,7 @@ $background: #9af5f5;
         padding: 40px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%;
+        width: 80%;
         max-width: 500px;
         gap: 20px;
 
