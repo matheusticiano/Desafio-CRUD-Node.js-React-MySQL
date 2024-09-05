@@ -6,6 +6,7 @@ const Tarefas = () => {
   const [editId, setEditId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [editDesc, setEditDesc] = useState("");
+  const [expandedTarefas, setExpandedTarefas] = useState({});
 
   const fetchTarefasPendentes = async () => {
     try {
@@ -58,6 +59,13 @@ const Tarefas = () => {
     setEditId(null);
   };
 
+  const toggleExpand = (id) => {
+    setExpandedTarefas(prev => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   useEffect(() => {
     fetchTarefasPendentes();
   }, []);
@@ -67,46 +75,63 @@ const Tarefas = () => {
       {tarefas.length === 0 ? (
         <h1>Não há tarefas pendentes.</h1>
       ) : (
-        tarefas.map((tarefa) => (
-          <div className="tarefa" key={tarefa.id}>
-            <div className="content">
-              {editId === tarefa.id ? (
-                <>
-                  <input
-                    type="text"
-                    value={editTitle}
-                    onChange={(e) => setEditTitle(e.target.value)}
-                  />
-                  <textarea
-                    value={editDesc}
-                    onChange={(e) => setEditDesc(e.target.value)}
-                  />
-                  <button onClick={handleSave}>Salvar</button>
-                  <button onClick={handleCancel}>Cancelar</button>
-                </>
-              ) : (
-                <>
-                  <h1>{tarefa.title}</h1>
-                  <p>{tarefa.desc}</p>
-                </>
-              )}
+        tarefas.map((tarefa) => {
+          const MAX_LENGTH = 300;
+          const shortDesc = tarefa.desc.length > MAX_LENGTH 
+            ? tarefa.desc.slice(0, MAX_LENGTH) + '... ' 
+            : tarefa.desc;
+
+          return (
+            <div className="tarefa" key={tarefa.id}>
+              <div className="content">
+                {editId === tarefa.id ? (
+                  <>
+                    <div className="edit_content">
+                      <input
+                        type="text"
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                      />
+                      <textarea
+                        value={editDesc}
+                        onChange={(e) => setEditDesc(e.target.value)}
+                      />
+                      
+                        <button onClick={handleSave}>Salvar</button>
+                        <button onClick={handleCancel}>Cancelar</button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h1>{tarefa.title}</h1>
+                    <p>
+                      {expandedTarefas[tarefa.id] ? tarefa.desc : shortDesc}
+                      {tarefa.desc.length > MAX_LENGTH && (
+                        <button onClick={() => toggleExpand(tarefa.id)}>
+                          {expandedTarefas[tarefa.id] ? 'Ler menos' : 'Ler mais'}
+                        </button>
+                      )}
+                    </p>
+                  </>
+                )}
+              </div>
+              <div className="tempo">
+                <p>
+                  Data de criação: <time dateTime={tarefa.date}>{new Date(tarefa.date).toLocaleDateString("pt-BR")}</time>
+                </p>
+              </div>
+              <div className="gerenciamento">
+                <button onClick={() => handleConcluir(tarefa.id)} disabled={tarefa.status === 1}>
+                  Concluir
+                </button>
+                <button onClick={() => handleEdit(tarefa)}>
+                  Editar
+                </button>
+                <button onClick={() => handleExcluir(tarefa.id)}>Excluir</button>
+              </div>
             </div>
-            <div className="tempo">
-              <p>
-                Data de criação: <time dateTime={tarefa.date}>{new Date(tarefa.date).toLocaleDateString("pt-BR")}</time>
-              </p>
-            </div>
-            <div className="gerenciamento">
-              <button onClick={() => handleConcluir(tarefa.id)} disabled={tarefa.status === 1}>
-                Concluir
-              </button>
-              <button onClick={() => handleEdit(tarefa)}>
-                Editar
-              </button>
-              <button onClick={() => handleExcluir(tarefa.id)}>Excluir</button>
-            </div>
-          </div>
-        ))
+          );
+        })
       )}
     </div>
   );

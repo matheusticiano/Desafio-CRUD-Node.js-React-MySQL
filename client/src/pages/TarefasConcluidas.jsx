@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 const TarefasConcluidas = () => {
   const [tarefas, setTarefas] = useState([]);
+  const [expandedTarefas, setExpandedTarefas] = useState({});
 
   const fetchTarefasConcluidas = async () => {
     try {
@@ -24,6 +25,13 @@ const TarefasConcluidas = () => {
     }
   };
 
+  const toggleExpand = (id) => {
+    setExpandedTarefas(prev => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   useEffect(() => {
     fetchTarefasConcluidas();
   }, []);
@@ -32,12 +40,26 @@ const TarefasConcluidas = () => {
     <div className="tarefas">
       {tarefas.length === 0 ? (
         <h1>Não há tarefas concluidas.</h1>
-      ) : (tarefas.map((tarefa) => (
-        <div className="tarefa" key={tarefa.id}>
-          <div className="content">
-            <h1>{tarefa.title}</h1>
-            <p>{tarefa.desc}</p>
-          </div>
+      ) : (
+        tarefas.map((tarefa) => {
+          const MAX_LENGTH = 300;
+          const shortDesc = tarefa.desc.length > MAX_LENGTH 
+            ? tarefa.desc.slice(0, MAX_LENGTH) + '... ' 
+            : tarefa.desc;
+
+          return (
+            <div className="tarefa" key={tarefa.id}>
+              <div className="content">
+                    <h1>{tarefa.title}</h1>
+                    <p>
+                      {expandedTarefas[tarefa.id] ? tarefa.desc : shortDesc}
+                      {tarefa.desc.length > MAX_LENGTH && (
+                        <button onClick={() => toggleExpand(tarefa.id)}>
+                          {expandedTarefas[tarefa.id] ? 'Ler menos' : 'Ler mais'}
+                        </button>
+                      )}
+                    </p>
+              </div>
           <div className="tempo">
             <p>
               Data de criação: <time dateTime={tarefa.date}>{new Date(tarefa.date).toLocaleDateString("pt-BR")}</time>
@@ -51,10 +73,11 @@ const TarefasConcluidas = () => {
             <button onClick={() => handleExcluir(tarefa.id)}>Excluir</button>
           </div>
         </div>
-      ))
-    )}
-    </div>
-  );
+      );
+    })
+  )}
+</div>
+);
 };
 
 export default TarefasConcluidas;
