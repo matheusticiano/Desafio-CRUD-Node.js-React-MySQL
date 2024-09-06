@@ -97,7 +97,7 @@ Permitida para qualquer tipo de usuário autenticado, listando apenas as tarefas
 docker compose up
 ```
 
-<small> O comando acima irá executar o arquivo docker-compose.yaml contendo a API , Banco de Dados e o Client do React, executando as migrations e disponibilizando o Cliente na [URL](http://localhost:) e a API na [URL](http://localhost:8800/api) </small>
+<small> O comando acima irá executar o arquivo docker-compose.yaml contendo a API , Banco de Dados e o Client do React, disponibilizando o Cliente na [URL](http://localhost:) e a API na [URL](http://localhost:8800/api) </small>
 
 ### Documentação
 
